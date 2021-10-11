@@ -19,7 +19,12 @@ class DailyDispatcher {
   }
 
   async getRooms () {
-    return this.axios.get(`${this.baseDailyUrl}/rooms`)
+    try {
+      return this.axios.get(`${this.baseDailyUrl}/rooms`)
+    } catch (e:any){
+      console.error(e.response.data)
+      throw new Exception(e.response.status, e.response.data.info)
+    }
   }
 
   async createNewRoom (roomName:string, endTime:number) {
@@ -37,11 +42,22 @@ class DailyDispatcher {
         start_audio_off: false
       }
     }
-    return this.axios.post(`${this.baseDailyUrl}/rooms`, roomInfo)
+    try {
+      const res = await this.axios.post(`${this.baseDailyUrl}/rooms`, roomInfo)
+      return res.data
+    } catch (e:any){
+      console.error(e.response.data)
+      throw new Exception(e.response.status, e.response.data.info)
+    }
   }
 
   async deleteRoom (name:string) {
-    return this.axios.delete(`${this.baseDailyUrl}/rooms/${name}`)
+    try {
+      return this.axios.delete(`${this.baseDailyUrl}/rooms/${name}`)
+    } catch (e:any){
+      console.error(e.response.data)
+      throw new Exception(e.response.status, e.response.data.info)
+    }
   }
 
 }

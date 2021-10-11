@@ -13,7 +13,7 @@ const getCallsPublicRoutes = (config:IDailyConfig) => {
       res.sendStatus(200)
     } catch (exception:any) {
       console.error(exception)
-      res.sendStatus(exception?.statusCode || 500)
+      res.status(exception.statusCode || 500).send(exception.message)
     }
   })
 
@@ -23,7 +23,7 @@ const getCallsPublicRoutes = (config:IDailyConfig) => {
       res.sendStatus(200)
     } catch (exception:any) {
       console.error(exception)
-      res.sendStatus(exception?.statusCode || 500)
+      res.status(exception.statusCode || 500).send(exception.message)
     }
   })
 
