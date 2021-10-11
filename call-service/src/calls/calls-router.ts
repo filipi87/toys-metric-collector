@@ -7,7 +7,7 @@ const getCallsPublicRoutes = (config:IDailyConfig) => {
   const router = express.Router()
   const callsManager = new CallsManager(config)
 
-  router.post('/room', async (req, res) => {
+  router.post('/rooms', async (req, res) => {
     try {
       await callsManager.createRoom(req.body)
       res.sendStatus(200)
@@ -17,7 +17,7 @@ const getCallsPublicRoutes = (config:IDailyConfig) => {
     }
   })
 
-  router.delete('/room/:roomName', async (req, res) => {
+  router.delete('/rooms/:roomName', async (req, res) => {
     try {
       await callsManager.removeRoom(req.params.roomName)
       res.sendStatus(200)

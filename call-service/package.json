@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "test": "NODE_ENV=test jest --runInBand --forceExit --verbose --detectOpenHandles",
-    "dev": "ts-node src"
+    "dev": "NODE_ENV=dev ts-node src"
   },
   "author": "Filipi da Silva Fuchter",
   "dependencies": {
@@ -16,8 +16,10 @@
     "@types/supertest": "^2.0.11",
     "jest": "^27.2.5",
     "supertest": "^6.1.6",
-    "ts-node": "^10.2.1",
+    "swagger-ui-express": "^4.1.6",
     "ts-jest": "^27.0.5",
-    "typescript": "^4.4.3"
+    "ts-node": "^10.2.1",
+    "typescript": "^4.4.3",
+    "yamljs": "^0.3.0"
   }
 }

@@ -1,0 +1,42 @@
+openapi: 3.0.0
+
+info:
+  description: Service responsible for managing the rooms for the calls.
+  version: 1.0.0
+  title: call-service
+servers:
+  - url: /
+paths:
+  /healthy:
+    get:
+      tags:
+        - Sanity check
+      responses:
+        200:
+          description: Ok.
+        500:
+          description: Server internal error.
+  /calls/v1/rooms:
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/NewRoom"
+      responses:
+        200:
+          description: Ok.
+        401:
+          description: Unauthorized.
+components:
+  schemas:
+    NewRoom:
+      type: object
+      required:
+        - roomName
+      properties:
+        roomName:
+          type: string
+
+
+

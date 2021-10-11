@@ -1,5 +1,6 @@
 import IDailyConfig from './interfaces/IDailyConfig'
 import DailyDispatcher from './daily-dispatcher'
+import INewRoom from './interfaces/INewRoom'
 
 class CallsManager {
 
@@ -9,7 +10,7 @@ class CallsManager {
     this.dailyDispatcher = new DailyDispatcher(config)
   }
 
-  async createRoom(roomName:string){
+  async createRoom({roomName}:INewRoom){
     console.log('Creating conference room', roomName)
     const endDate = Date.now() + (2*24*60*1000) //02 hours from now
     const dailyExpTime = Math.floor(endDate/1000)
