@@ -1,47 +1,25 @@
 import { Exception } from '../utils/exception'
+import axios from 'axios'
 
 class DailyDispatcher {
 
   private baseDailyUrl
   private apiKey
+  private axios
 
   constructor (config:{url:string, apiKey:string}) {
     this.baseDailyUrl = config.url
     this.apiKey = config.apiKey
-  }
-
-  async _fetchDelete (url:string) {
-    const res = await fetch(`${url}`, { method: 'DELETE', headers: { Authorization: `Bearer ${this.apiKey}` } })
-    const responseBody = await res.json()
-    if (res.status !== 200) {
-      console.error(responseBody)
-      throw new Exception(res.status, `GET ${url} falhou com statusCode ${res.status}`)
-    }
-    return responseBody
-  }
-
-  async _fetchGet (url:string) {
-    const res = await fetch(`${url}`, { method: 'GET', headers: { Authorization: `Bearer ${this.apiKey}` } })
-    const responseBody = await res.json()
-    if (res.status !== 200) {
-      console.error(responseBody)
-      throw new Exception(res.status, `GET ${url} falhou com statusCode ${res.status}`)
-    }
-    return responseBody
-  }
-
-  async _fetchPost (url:string, body:string) {
-    const res = await fetch(`${url}`, { method: 'POST', headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${this.apiKey}` }, body })
-    const responseBody = await res.json()
-    if (res.status !== 200) {
-      console.error(responseBody)
-      throw new Exception(res.status, `GET ${url} falhou com statusCode ${res.status}`)
-    }
-    return responseBody
+    this.axios = axios.create({
+      baseURL: config.url,
+      headers: {
+        Authorization: `Bearer ${this.apiKey}`
+      }
+    });
   }
 
   async getRooms () {
-    return this._fetchGet(`${this.baseDailyUrl}/rooms`)
+    return this.axios.get(`${this.baseDailyUrl}/rooms`)
   }
 
   async createNewRoom (roomName:string, endTime:number) {
@@ -59,11 +37,11 @@ class DailyDispatcher {
         start_audio_off: false
       }
     }
-    return this._fetchPost(`${this.baseDailyUrl}/rooms`, JSON.stringify(roomInfo))
+    return this.axios.post(`${this.baseDailyUrl}/rooms`, roomInfo)
   }
 
   async deleteRoom (name:string) {
-    return this._fetchDelete(`${this.baseDailyUrl}/rooms/${name}`)
+    return this.axios.delete(`${this.baseDailyUrl}/rooms/${name}`)
   }
 
 }
