@@ -27,3 +27,4 @@ You will need these technologies in order to run the application
 - call-service
   - Add a log library
   - Create more test scenarios
+  - Improve the swagger documentation to map all the other possible errors code

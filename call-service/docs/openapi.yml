@@ -26,8 +26,26 @@ paths:
       responses:
         200:
           description: Ok.
-        401:
-          description: Unauthorized.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/NewRoomResponse"
+        500:
+          description: Server internal error.
+  /calls/v1/rooms/{roomName}:
+    delete:
+      parameters:
+        - name: roomName
+          in: path
+          description: identificador do evento
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: Ok.
+        500:
+          description: Server internal error.
 components:
   schemas:
     NewRoom:
@@ -37,6 +55,23 @@ components:
       properties:
         roomName:
           type: string
+          description: Name of the room at Daily
+    NewRoomResponse:
+      type: object
+      required:
+        - name
+        - url
+        - id
+      properties:
+        id:
+          type: string
+          description: Identifier of the room from Daily
+        name:
+          type: string
+          description: Name of the room at Daily
+        url:
+          type: string
+          description: URL to join the conference
 
 
 

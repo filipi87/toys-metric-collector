@@ -19,6 +19,7 @@ const getCallsPublicRoutes = (config:IDailyConfig) => {
 
   router.delete('/rooms/:roomName', async (req, res) => {
     try {
+      console.log('req.params', req.params)
       await callsManager.removeRoom(req.params.roomName)
       res.sendStatus(200)
     } catch (exception:any) {

@@ -20,7 +20,7 @@ class CallsManager {
   }
 
   async removeRoom(roomName:string){
-    console.log('Removing booking', roomName)
+    console.log('Removing conference room', roomName)
     await this.dailyDispatcher.deleteRoom(roomName)
   }
 
