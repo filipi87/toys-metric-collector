@@ -17,7 +17,9 @@ You will need these technologies in order to run the application
 
 ### TODO - Next steps for production
 - Devops:
-    - Configure the continuos integration to create the docker images
+  - Configure the continuous integration to:
     - Run the tests;
+    - create the docker images;
 - web-client:
-    - Create automated tests;
+  - Configure lint at the code;
+  - Create automated tests;
