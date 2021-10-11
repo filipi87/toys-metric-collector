@@ -23,3 +23,7 @@ You will need these technologies in order to run the application
 - web-client:
   - Configure lint at the code;
   - Create automated tests;
+  - Add a log library
+- call-service
+  - Add a log library
+  - Create more test scenarios
