@@ -22,8 +22,8 @@ class DailyDispatcher {
     try {
       return this.axios.get(`${this.baseDailyUrl}/rooms`)
     } catch (e:any){
-      console.error(e.response.data)
-      throw new Exception(e.response.status, e.response.data.info)
+      console.error(e.response?.data)
+      throw new Exception(e.response?.status, e.response?.data.info)
     }
   }
 
@@ -46,8 +46,8 @@ class DailyDispatcher {
       const res = await this.axios.post(`${this.baseDailyUrl}/rooms`, roomInfo)
       return res.data
     } catch (e:any){
-      console.error(e.response.data)
-      throw new Exception(e.response.status, e.response.data.info)
+      console.error(e.response?.data)
+      throw new Exception(e.response?.status, e.response?.data.info)
     }
   }
 
@@ -55,8 +55,8 @@ class DailyDispatcher {
     try {
       return this.axios.delete(`${this.baseDailyUrl}/rooms/${name}`)
     } catch (e:any){
-      console.error(e.response.data)
-      throw new Exception(e.response.status, e.response.data.info)
+      console.error(e.response?.data)
+      throw new Exception(e.response?.status, e.response?.data.info)
     }
   }
 
