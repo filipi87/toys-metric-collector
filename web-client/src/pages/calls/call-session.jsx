@@ -11,15 +11,15 @@ const CallSession = () => {
 
   const [callFrame, setCallFrame] = useState(null);
   const dailyParentElement = useRef(null);
-  const { dispatch, dispatchDeleteRoom, state } = useCallContext();
+  const { dispatch, dispatchDeleteRoom, state, dispatchStats } = useCallContext();
 
   const sendNetworkStats = async () => {
-    console.log('sendNetworkStats')
     if(!callFrame){
       return
     }
     let networkStats = await callFrame.getNetworkStats()
-    console.log('networkStats', networkStats)
+    const {videoRecvBitsPerSecond, videoRecvPacketLoss, videoSendBitsPerSecond, videoSendPacketLoss} =  networkStats?.stats?.latest
+    dispatchStats({videoRecvBitsPerSecond, videoRecvPacketLoss, videoSendBitsPerSecond, videoSendPacketLoss})
   }
 
   const onLeftMeeting = () => {
