@@ -9,8 +9,8 @@ const getCallsPublicRoutes = (config:IDailyConfig) => {
 
   router.post('/rooms', async (req, res) => {
     try {
-      await callsManager.createRoom(req.body)
-      res.sendStatus(200)
+      const roomInfo = await callsManager.createRoom(req.body)
+      res.status(200).send(roomInfo)
     } catch (exception:any) {
       console.error(exception)
       res.status(exception.statusCode || 500).send(exception.message)
