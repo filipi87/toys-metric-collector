@@ -1,20 +1,12 @@
 import React from 'react';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-
-import Dashboard from './pages/dashboard/dashboard';
-import Home from './pages/home/home';
-import CallSession from './pages/calls/call-session';
+import { BrowserRouter } from 'react-router-dom';
+import { RouterConfig } from './router/router-config';
 
 const App = () => {
     return (
-      <Router>
-        <Switch>
-          <Route path="/call/:eventId" component={CallSession} />
-          <Route path="/home" component={Home} />
-          <Route path="/dashboard" component={Dashboard} />
-          <Route path="/" component={Home} />
-        </Switch>
-      </Router>
+      <BrowserRouter>
+        <RouterConfig />
+      </BrowserRouter>
     );
 };
 
