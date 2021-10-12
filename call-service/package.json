@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "test": "NODE_ENV=test jest --runInBand --forceExit --verbose --detectOpenHandles",
-    "dev": "NODE_ENV=dev ts-node src"
+    "dev": "NODE_ENV=dev ts-node src",
+    "start": "ts-node src"
   },
   "author": "Filipi da Silva Fuchter",
   "dependencies": {
