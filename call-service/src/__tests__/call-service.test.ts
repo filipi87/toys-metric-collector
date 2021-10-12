@@ -43,7 +43,7 @@ describe('Public Routes', () => {
     mock.onPost(`${DAILY_BASE_URL}/rooms`).reply(200, {
       name: body.roomName,
       url: `http://test.daily.com`,
-      id: 111
+      id: '111'
     })
     const res = await request(app).post(`${BASE_URL}/rooms`).send(body)
     expect(res.statusCode).toBe(200)
@@ -65,7 +65,7 @@ describe('Public Routes', () => {
     mock.onPost(`${DAILY_BASE_URL}/rooms`).reply(200, {
       name: roomInfo.roomName,
       url: `http://test.daily.com`,
-      id: 222
+      id: '222'
     })
     const newRoomRes = await request(app).post(`${BASE_URL}/rooms`).send(roomInfo)
     expect(newRoomRes.statusCode).toBe(200)

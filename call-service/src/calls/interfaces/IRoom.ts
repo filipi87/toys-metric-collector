@@ -1,12 +1,8 @@
-import IStats from "./IStats";
+import IRoomUserInfo from "./IRoomUserInfo";
 
 export default interface IRoom {
   id: string;
   name: string;
   url: string;
-  users: [{
-    id:string;
-    name: string;
-    videoStatistics: IStats[]
-  }]
+  users: IRoomUserInfo[]
 }

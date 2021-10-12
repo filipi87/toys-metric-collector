@@ -28,9 +28,10 @@ const getCallsPublicRoutes = (config:IDailyConfig) => {
     }
   })
 
-  router.post('/rooms/:roomName/stats', async (req, res) => {
+  router.post('/rooms/:roomId/stats', async (req, res) => {
     try {
-      //const roomInfo = await callsManager.createRoom(req.body)
+      const roomId = req.params.roomId
+      await callsManager.saveStatistics(roomId, req.body)
       res.sendStatus(200)
     } catch (exception:any) {
       console.error(exception)

@@ -15,12 +15,13 @@ class CallsDao {
         if(this.roomsDatabase.has(roomInfo.id)){
             throw new Exception(403, 'There is already a room with the same id!')
         }
+        roomInfo.users = []
         this.roomsDatabase.set(roomInfo.id, roomInfo)
     }
 
     private getUserFromRoom(roomInfo:IRoom, userId:string) {
         let users = roomInfo.users?.filter((user) => user.id === userId)
-        return users.length > 0 ? users[0] : null
+        return users && users.length > 0 ? users[0] : null
     }
 
     addStats(roomId:string, newStats:INewStats) {

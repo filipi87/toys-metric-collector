@@ -2,6 +2,7 @@ import IDailyConfig from './interfaces/IDailyConfig'
 import DailyDispatcher from './daily-dispatcher'
 import INewRoom from './interfaces/INewRoom'
 import CallsDao from './calls-dao'
+import INewStats from './interfaces/INewStat'
 
 class CallsManager {
 
@@ -26,6 +27,11 @@ class CallsManager {
   async removeRoom(roomName:string){
     console.log('Removing conference room', roomName)
     await this.dailyDispatcher.deleteRoom(roomName)
+  }
+
+  async saveStatistics(roomId:string, newStats:INewStats){
+    console.log('Saving statistics', roomId, newStats)
+    this.callsDao.addStats(roomId, newStats)
   }
 
 }
