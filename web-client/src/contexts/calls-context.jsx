@@ -21,9 +21,10 @@ const callReducer = (state, action) => {
 const CallProvider = ({ children }) => {
   const [state, dispatch] = React.useReducer(callReducer, initialState);
   const dispatchCreateRoom = async (roomName) => {
-    console.log('Do whatever async operation we need', roomName, axios)
+    console.log('Will create new room:', roomName)
     const response = await axios.post('/calls/v1/rooms', {roomName})
-    console.log('Response', response)
+    const roomInfo = response.data
+    dispatch({type:'setRoomInfo', value:roomInfo})
   }
   const value = { state, dispatch, dispatchCreateRoom };
   return <CallsContext.Provider value={value}>{children}</CallsContext.Provider>;

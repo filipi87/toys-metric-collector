@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { Redirect, useParams } from 'react-router';
 import DailyIframe from '@daily-co/daily-js';
+import { useCallContext } from '../../contexts/calls-context';
 
 const CallSession = () => {
   const { eventId } = useParams();
@@ -8,6 +9,7 @@ const CallSession = () => {
   const [goHome, setGoHome] = useState(false);
   const [callFrame, setCallFrame] = useState(null);
   const dailyParentElement = useRef(null);
+  const { dispatch } = useCallContext();
 
   useEffect(() => {
     const frame = DailyIframe.createFrame(dailyParentElement.current, {
@@ -24,6 +26,7 @@ const CallSession = () => {
     setCallFrame(frame);
 
     frame.on('left-meeting', () => {
+      dispatch({type:'setRoomInfo', value:undefined})
       setGoHome(true);
     });
     const start = async () => {

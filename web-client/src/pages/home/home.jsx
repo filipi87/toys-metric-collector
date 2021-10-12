@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Typography, Container, Grid, Paper, Button, TextField } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles';
 
-import { DASHBOARD } from '../../router/router-constants';
+import { DASHBOARD, CALL } from '../../router/router-constants';
 import { useHistory } from 'react-router-dom';
 import { useCallContext } from '../../contexts/calls-context';
 
@@ -18,14 +18,19 @@ const Home = () => {
   const classes = useStyles();
   const history = useHistory();
   const [roomName, setRoomName] = useState('');
-  const { dispatchCreateRoom } = useCallContext();
+  const { dispatchCreateRoom, state } = useCallContext();
+
+  useEffect(() => {
+      if(state.roomInfo){
+        history.push(`${CALL}/${state.roomInfo.name}`);
+      }
+  }, [state.roomInfo]);
 
   const goToDashboardPage = () => {
       history.push(DASHBOARD);
   };
 
   const createRoom = () => {
-      console.log('Room name', roomName)
       dispatchCreateRoom(roomName);
   };
 
