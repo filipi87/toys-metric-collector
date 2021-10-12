@@ -13,25 +13,32 @@ const CallSession = () => {
   const dailyParentElement = useRef(null);
   const { dispatch, dispatchDeleteRoom, state } = useCallContext();
 
-  const onJoinedMeeting = async () => {
-    console.log('Joined the meeting')
-    let networkStats = await callFrame?.getNetworkStats()
-    console.log('networkStats', networkStats, callFrame)
+  const sendNetworkStats = async () => {
+    console.log('sendNetworkStats')
+    if(!callFrame){
+      return
+    }
+    let networkStats = await callFrame.getNetworkStats()
+    console.log('networkStats', networkStats)
   }
 
   const onLeftMeeting = () => {
     dispatch({type:'setRoomInfo', value:undefined})
     dispatchDeleteRoom(state.roomInfo.name)
-    console.log('callFrame', callFrame)
-    callFrame?.destroy();
     history.push(HOME);
   }
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      sendNetworkStats();
+    }, 15000);
+    return () => clearInterval(interval);
+  }, [callFrame]);
 
   useEffect(() => {
     if(!state.roomInfo){
       return
     }
-    console.log('state.roomInfo', state.roomInfo)
     const frame = DailyIframe.createFrame(dailyParentElement.current, {
       showLeaveButton: true,
       showFullscreenButton: true,
@@ -44,7 +51,6 @@ const CallSession = () => {
       },
     });
     setCallFrame(frame);
-    frame.on('joined-meeting', onJoinedMeeting);
     frame.on('left-meeting', onLeftMeeting);
     frame.join({ url: state.roomInfo.url });
   }, [state.roomInfo]);
