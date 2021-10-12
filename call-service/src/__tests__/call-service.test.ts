@@ -60,15 +60,31 @@ describe('Public Routes', () => {
   })
 
   it('Send statistics', async () => {
+    //creating new room
+    const roomInfo = {roomName:'testRoom2'}
+    mock.onPost(`${DAILY_BASE_URL}/rooms`).reply(200, {
+      name: roomInfo.roomName,
+      url: `http://test.daily.com`,
+      id: 222
+    })
+    const newRoomRes = await request(app).post(`${BASE_URL}/rooms`).send(roomInfo)
+    expect(newRoomRes.statusCode).toBe(200)
+    const roomId = newRoomRes.body.id
+    console.log('newRoomRes', newRoomRes.body)
+    //sending statistics
     const body = {
-        roomId:'testRoomId', 
-        roomName:'testRoom',
+      userInfo: {
+        id: 'testUserId',
+        name: 'testUser'
+      },
+      stats: {
         videoRecvBitsPerSecond: 0,
         videoRecvPacketLoss: 0,
         videoSendBitsPerSecond: 0,
         videoSendPacketLoss: 0
+      }
     }
-    const res = await request(app).post(`${BASE_URL}/rooms/${body.roomName}/stats`).send(body)
+    const res = await request(app).post(`${BASE_URL}/rooms/${roomId}/stats`).send(body)
     expect(res.statusCode).toBe(200)
   })
 

@@ -18,6 +18,7 @@ class CallsManager {
     const endDate = Date.now() + (2*24*60*1000) //02 hours from now
     const dailyExpTime = Math.floor(endDate/1000)
     const roomInfo = await this.dailyDispatcher.createNewRoom(roomName, dailyExpTime)
+    this.callsDao.createNewRoom(roomInfo)
     console.log('new room', roomInfo)
     return roomInfo
   }

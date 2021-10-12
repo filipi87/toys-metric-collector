@@ -15,7 +15,7 @@ const CallSession = () => {
 
   const sendNetworkStats = async () => {
     const localParticipant = callFrame.participants().local
-    const userInfo = {userId: localParticipant.user_id, userName:localParticipant.user_name}
+    const userInfo = {id: localParticipant.user_id, name:localParticipant.user_name}
     let networkStats = await callFrame.getNetworkStats()
     const {videoRecvBitsPerSecond, videoRecvPacketLoss, videoSendBitsPerSecond, videoSendPacketLoss} =  networkStats?.stats?.latest
     dispatchStats({

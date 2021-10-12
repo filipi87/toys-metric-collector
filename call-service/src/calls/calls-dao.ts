@@ -1,6 +1,6 @@
 import { Exception } from "../utils/exception"
+import INewStats from "./interfaces/INewStat"
 import IRoom from "./interfaces/IRoom"
-import IRoomStats from "./interfaces/IRoomStats"
 
 class CallsDao {
 
@@ -18,12 +18,24 @@ class CallsDao {
         this.roomsDatabase.set(roomInfo.id, roomInfo)
     }
 
-    addStats(roomId:string, stats:IRoomStats) {
+    private getUserFromRoom(roomInfo:IRoom, userId:string) {
+        let users = roomInfo.users?.filter((user) => user.id === userId)
+        return users.length > 0 ? users[0] : null
+    }
+
+    addStats(roomId:string, newStats:INewStats) {
         if(!this.roomsDatabase.has(roomId)){
             throw new Exception(404, 'There is no room with the specified id!')
         }
-    }  
+        const roomInfo = this.roomsDatabase.get(roomId) as IRoom
+        let user = this.getUserFromRoom(roomInfo, newStats.userInfo.id)
+        if(!user){
+            user = { ...newStats.userInfo, videoStatistics:[] }
+            roomInfo.users.push(user)
+        }
+        user.videoStatistics.push(newStats.stats)
+    }
  
 }
   
-  export default CallsDao
+export default CallsDao
