@@ -12,7 +12,7 @@ const CallSession = () => {
 
   const [callFrame, setCallFrame] = useState(null);
   const dailyParentElement = useRef(null);
-  const { dispatch, dispatchDeleteRoom, state, dispatchStats } = useCallContext();
+  const { dispatch, dispatchDeleteRoom, state, dispatchStats, dispatchGetRoom } = useCallContext();
 
   const sendNetworkStats = async () => {
     const localParticipant = callFrame.participants().local
@@ -34,7 +34,9 @@ const CallSession = () => {
 
   //used for loading data when accessing directly by the link
   useEffect(() => {
-    console.log('roomId', roomId)
+    if(!state.roomInfo){
+      dispatchGetRoom(roomId)
+    }
   }, [roomId]);
 
   useEffect(() => {

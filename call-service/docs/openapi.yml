@@ -29,10 +29,27 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/NewRoomResponse"
+                $ref: "#/components/schemas/RoomResponse"
         500:
           description: Server internal error.
   /calls/v1/rooms/{roomId}:
+    get:
+      parameters:
+        - name: roomId
+          in: path
+          description: It will be used as the room name at daily
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: Ok.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/RoomResponse"
+        500:
+          description: Server internal error.
     delete:
       parameters:
         - name: roomId
@@ -75,7 +92,7 @@ components:
         roomId:
           type: string
           description: Identifier of the room. It will be used as the room name at daily
-    NewRoomResponse:
+    RoomResponse:
       type: object
       required:
         - roomId

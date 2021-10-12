@@ -25,6 +25,12 @@ const createAsyncFunctions = (dispatch, state) => {
     const roomInfo = response.data
     dispatch({type:'setRoomInfo', value:roomInfo})
   }
+  const dispatchGetRoom = async (roomId) => {
+    console.log('Room will be deleted:', roomId)
+    const response = await axios.get(`/calls/v1/rooms/${roomId}`)
+    const roomInfo = response.data
+    dispatch({type:'setRoomInfo', value:roomInfo})
+  }
   const dispatchDeleteRoom = async (roomId) => {
     console.log('Room will be deleted:', roomId)
     await axios.delete(`/calls/v1/rooms/${roomId}`)
@@ -35,7 +41,7 @@ const createAsyncFunctions = (dispatch, state) => {
     // TODO implement the server to receive the statistics
     //const response = await axios.post('/calls/v1/rooms', {roomId})
   }
-  return { dispatchCreateRoom, dispatchDeleteRoom, dispatchStats }
+  return { dispatchCreateRoom, dispatchDeleteRoom, dispatchStats, dispatchGetRoom }
 }
 
 const CallProvider = ({ children }) => {

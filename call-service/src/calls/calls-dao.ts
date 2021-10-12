@@ -36,6 +36,13 @@ class CallsDao {
         }
         user.videoStatistics.push(newStats.stats)
     }
+
+    getRoom(roomId:string){
+        if(!this.roomsDatabase.has(roomId)){
+            throw new Exception(404, 'There is no room with the specified id!')
+        }
+        return this.roomsDatabase.get(roomId) as IRoom
+    }
  
 }
   

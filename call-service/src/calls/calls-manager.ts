@@ -29,6 +29,11 @@ class CallsManager {
     await this.dailyDispatcher.deleteRoom(roomId)
   }
 
+  async getRoom(roomId:string){
+    console.log('Getting room', roomId)
+    return this.callsDao.getRoom(roomId)
+  }
+
   async saveStatistics(roomId:string, newStats:INewStats){
     console.log('Saving statistics', roomId, newStats)
     this.callsDao.addStats(roomId, newStats)
