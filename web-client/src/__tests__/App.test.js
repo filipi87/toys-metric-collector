@@ -3,6 +3,6 @@ import App from '../App';
 
 test('renders home page', () => {
   render(<App />);
-  const homePageElement = screen.getByText(/Home page/);
+  const homePageElement = screen.getByText(/Toys/);
   expect(homePageElement).toBeInTheDocument();
 });
