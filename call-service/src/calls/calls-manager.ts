@@ -24,7 +24,7 @@ class CallsManager {
     return roomInfo
   }
 
-  async removeRoom(roomName:string){
+  async removeDailyRoom(roomName:string){
     console.log('Removing conference room', roomName)
     await this.dailyDispatcher.deleteRoom(roomName)
   }
