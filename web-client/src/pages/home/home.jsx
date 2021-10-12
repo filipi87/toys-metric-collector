@@ -4,6 +4,7 @@ import { makeStyles } from '@material-ui/core/styles';
 
 import { DASHBOARD } from '../../router/router-constants';
 import { useHistory } from 'react-router-dom';
+import { useCallContext } from '../../contexts/calls-context';
 
 const useStyles = makeStyles(theme => ({
     aligned: {
@@ -17,9 +18,15 @@ const Home = () => {
   const classes = useStyles();
   const history = useHistory();
   const [roomName, setRoomName] = useState('');
+  const { dispatchCreateRoom } = useCallContext();
 
   const goToDashboardPage = () => {
       history.push(DASHBOARD);
+  };
+
+  const createRoom = () => {
+      console.log('Room name', roomName)
+      dispatchCreateRoom(roomName);
   };
 
   return (
@@ -40,7 +47,7 @@ const Home = () => {
               value={roomName}
               onChange={e => setRoomName(e.target.value)}
           />
-          <Button type="button" color="primary" variant="contained">
+          <Button type="button" color="primary" variant="contained" onClick={() => { createRoom() }}>
               Join
           </Button>
         </Grid>
