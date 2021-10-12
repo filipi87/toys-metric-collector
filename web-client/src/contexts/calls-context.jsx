@@ -36,10 +36,9 @@ const createAsyncFunctions = (dispatch, state) => {
     await axios.delete(`/calls/v1/rooms/${roomId}`)
     dispatch({type:'setRoomInfo', value:undefined})
   }
-  const dispatchStats = async (videoStats) => {
+  const dispatchStats = async (roomId, videoStats) => {
     console.log('dispatchStats:', videoStats)
-    // TODO implement the server to receive the statistics
-    //const response = await axios.post('/calls/v1/rooms', {roomId})
+    await axios.post(`/calls/v1/rooms/${roomId}/stats`, videoStats)
   }
   return { dispatchCreateRoom, dispatchDeleteRoom, dispatchStats, dispatchGetRoom }
 }

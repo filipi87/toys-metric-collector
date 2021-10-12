@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { Redirect, useParams } from 'react-router';
+import { useParams } from 'react-router';
 import DailyIframe from '@daily-co/daily-js';
 import { useCallContext } from '../../contexts/calls-context';
 
@@ -19,7 +19,7 @@ const CallSession = () => {
     const userInfo = {id: localParticipant.user_id, name:localParticipant.user_name}
     let networkStats = await callFrame.getNetworkStats()
     const {videoRecvBitsPerSecond, videoRecvPacketLoss, videoSendBitsPerSecond, videoSendPacketLoss} =  networkStats?.stats?.latest
-    dispatchStats({
+    dispatchStats(roomId, {
       userInfo,
       stats: { videoRecvBitsPerSecond, videoRecvPacketLoss, videoSendBitsPerSecond, videoSendPacketLoss }
     })
@@ -27,7 +27,7 @@ const CallSession = () => {
 
   const onLeftMeeting = () => {
     dispatch({type:'setRoomInfo', value:undefined})
-    dispatchDeleteRoom(state.roomInfo.roomId)
+    dispatchDeleteRoom(roomId)
     callFrame?.destroy()
     history.push(HOME);
   }
