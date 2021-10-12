@@ -37,10 +37,29 @@ paths:
       parameters:
         - name: roomName
           in: path
-          description: identificador do evento
+          description: Room name, the same from daily
           required: true
           schema:
             type: string
+      responses:
+        200:
+          description: Ok.
+        500:
+          description: Server internal error.
+  /calls/v1/rooms/{roomId}/stats:
+    post:
+      parameters:
+        - name: roomId
+          in: path
+          description: Room identifier, the same from daily
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/NewStats"
       responses:
         200:
           description: Ok.
@@ -72,6 +91,44 @@ components:
         url:
           type: string
           description: URL to join the conference
+    NewStats:
+      type: object
+      required:
+        - userInfo
+        - stats
+      properties:
+        userInfo:
+          type: object
+          required:
+            - id
+            - name
+          properties:
+            id:
+              type: string
+              description: User identifier retrieved from daily
+            name:
+              type: string
+              description: Name of the user retrieved from daily
+        stats:
+          type: object
+          required:
+            - videoRecvBitsPerSecond
+            - videoRecvPacketLoss
+            - videoSendBitsPerSecond
+            - videoSendPacketLoss
+          properties:
+            videoRecvBitsPerSecond:
+              type: number
+              description: Number of bits received per second, retrieved from daily
+            videoRecvPacketLoss:
+              type: number
+              description: The worst received packet loss number seen for a two-second period, retrieved from daily
+            videoSendBitsPerSecond:
+              type: number
+              description: Number of bits send per second, retrieved from daily
+            videoSendPacketLoss:
+              type: number
+              description: the worst send packet loss number seen for a two-second period, retrieved from daily
 
 
 

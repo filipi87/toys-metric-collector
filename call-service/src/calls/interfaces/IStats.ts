@@ -1,6 +1,6 @@
 export default interface IStats {
-    videoRecvBitsPerSecond:string,
-    videoRecvPacketLoss:string,
-    videoSendBitsPerSecond:string,
-    videoSendPacketLoss:string
+    videoRecvBitsPerSecond:number,
+    videoRecvPacketLoss:number,
+    videoSendBitsPerSecond:number,
+    videoSendPacketLoss:number
 }
