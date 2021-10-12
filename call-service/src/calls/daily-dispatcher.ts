@@ -35,7 +35,7 @@ class DailyDispatcher {
       properties: {
         exp: endTime,
         enable_new_call_ui: true,
-        enable_prejoin_ui: false,
+        enable_prejoin_ui: true,
         //enable_knocking: true,
         enable_screenshare: true,
         enable_chat: true,

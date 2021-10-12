@@ -9,7 +9,7 @@ const defaultDailyRoomProperties = {
   privacy: 'public',
   properties: {
     enable_new_call_ui: true,
-    enable_prejoin_ui: false,
+    enable_prejoin_ui: true,
     enable_screenshare: true,
     enable_chat: true,
     start_video_off: true,

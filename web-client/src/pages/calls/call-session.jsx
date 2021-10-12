@@ -25,6 +25,7 @@ const CallSession = () => {
   const onLeftMeeting = () => {
     dispatch({type:'setRoomInfo', value:undefined})
     dispatchDeleteRoom(state.roomInfo.name)
+    callFrame?.destroy()
     history.push(HOME);
   }
 
