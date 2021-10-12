@@ -6,15 +6,13 @@ import CallSession from './pages/calls/call-session';
 
 const App = () => {
     return (
-        <>
-          <Router>
-            <Switch>
-              <Route path="/call/:eventId" component={CallSession} />
-              <Route path="/home" component={Home} />
-              <Route path="/" component={Home} />
-            </Switch>
-          </Router>
-        </>
+      <Router>
+        <Switch>
+          <Route path="/call/:eventId" component={CallSession} />
+          <Route path="/home" component={Home} />
+          <Route path="/" component={Home} />
+        </Switch>
+      </Router>
     );
 };
 
