@@ -54,10 +54,11 @@ class DailyDispatcher {
 
   async deleteRoom (name:string) {
     try {
-      return this.axios.delete(`${this.baseDailyUrl}/rooms/${name}`)
+      await this.axios.delete(`${this.baseDailyUrl}/rooms/${name}`)
     } catch (e:any){
-      console.error(e.response?.data)
-      throw new Exception(e.response?.status, e.response?.data.info)
+      console.error(e.response.status, e.response?.data)
+      if(e.response.status !== 404)
+          throw new Exception(e.response?.status, e.response?.data.info)
     }
   }
 
