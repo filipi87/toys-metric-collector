@@ -34,7 +34,7 @@ const CallSession = () => {
       });
     };
     start();
-  }, []);
+  }, [eventId]);
 
   useEffect(() => {
     callFrame?.destroy();
