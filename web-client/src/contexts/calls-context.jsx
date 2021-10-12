@@ -26,7 +26,12 @@ const CallProvider = ({ children }) => {
     const roomInfo = response.data
     dispatch({type:'setRoomInfo', value:roomInfo})
   }
-  const value = { state, dispatch, dispatchCreateRoom };
+  const dispatchDeleteRoom = async (roomName) => {
+    console.log('Room will be deleted:', roomName)
+    await axios.delete(`/calls/v1/rooms/${roomName}`)
+    dispatch({type:'setRoomInfo', value:undefined})
+  }
+  const value = { state, dispatch, dispatchCreateRoom, dispatchDeleteRoom };
   return <CallsContext.Provider value={value}>{children}</CallsContext.Provider>;
 }
 

@@ -3,13 +3,16 @@ import { Redirect, useParams } from 'react-router';
 import DailyIframe from '@daily-co/daily-js';
 import { useCallContext } from '../../contexts/calls-context';
 
-const CallSession = () => {
-  const { eventId } = useParams();
+import { useHistory } from 'react-router-dom';
+import { HOME } from '../../router/router-constants';
 
-  const [goHome, setGoHome] = useState(false);
+const CallSession = () => {
+  const { roomName } = useParams();
+  const history = useHistory();
+
   const [callFrame, setCallFrame] = useState(null);
   const dailyParentElement = useRef(null);
-  const { dispatch } = useCallContext();
+  const { dispatch, dispatchDeleteRoom } = useCallContext();
 
   useEffect(() => {
     const frame = DailyIframe.createFrame(dailyParentElement.current, {
@@ -24,29 +27,31 @@ const CallSession = () => {
       },
     });
     setCallFrame(frame);
-
+    frame.on('joined-meeting', async () => {
+      console.log('Joined the meeting')
+      window.dailyFrame = frame
+      let networkStats = await frame.getNetworkStats()
+      console.log('networkStats', networkStats)
+    });
     frame.on('left-meeting', () => {
       dispatch({type:'setRoomInfo', value:undefined})
-      setGoHome(true);
+      dispatchDeleteRoom(roomName)
+      callFrame?.destroy();
+      history.push(HOME);
     });
     const start = async () => {
       //TODO need to retrieve the credentials in case of private conferences
-      const roomInfo = { url: `https://filipi87.daily.co/${eventId}`}
+      const roomInfo = { url: `https://filipi87.daily.co/${roomName}`}
       frame.join({
         url: roomInfo.url,
         //token: roomInfo.token,
       });
     };
     start();
-  }, [eventId]);
-
-  useEffect(() => {
-    callFrame?.destroy();
-  }, [goHome]);
+  }, [roomName]);
 
   return (
     <div>
-      {goHome ? <Redirect to="/home" /> : null}
       <div ref={dailyParentElement} />
     </div>
   );
