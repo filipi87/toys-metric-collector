@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Typography, Container, Grid, Paper, Button, TextField } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles';
 
-import { HOME } from '../../router/router-constants';
+import { DASHBOARD } from '../../router/router-constants';
 import { useHistory } from 'react-router-dom';
 
 const useStyles = makeStyles(theme => ({
@@ -19,7 +19,7 @@ const Home = () => {
   const [roomName, setRoomName] = useState('');
 
   const goToDashboardPage = () => {
-      history.push(HOME);
+      history.push(DASHBOARD);
   };
 
   return (
@@ -45,7 +45,7 @@ const Home = () => {
           </Button>
         </Grid>
         <Grid item xs={12} md={6} className={classes.aligned}>
-          <Button type="button" color="primary" variant="contained">
+          <Button type="button" color="primary" variant="contained" onClick={() => { goToDashboardPage() }}>
               Dashboard
           </Button>
         </Grid>
