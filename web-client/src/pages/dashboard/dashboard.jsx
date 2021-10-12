@@ -1,11 +1,9 @@
 import React from 'react';
 import { Typography, Container, Grid, Paper } from '@material-ui/core'
 
-import styles from './dashboard.css';
-
 const Dashboard = () => {
   return (
-    <Container maxWidth="xs" className={styles.root}>
+    <Container maxWidth="xs">
       <Grid container spacing={3}>
         <Grid item xs={12} md={12}>
           <Typography variant="h5" color="textSecondary">

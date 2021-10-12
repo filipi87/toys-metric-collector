@@ -1,7 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { Redirect, useParams } from 'react-router';
 import DailyIframe from '@daily-co/daily-js';
-import styles from './call-session.css';
 
 const CallSession = () => {
   const { eventId } = useParams();
@@ -43,7 +42,7 @@ const CallSession = () => {
   }, [goHome]);
 
   return (
-    <div className={styles.CallSession}>
+    <div>
       {goHome ? <Redirect to="/home" /> : null}
       <div ref={dailyParentElement} />
     </div>
