@@ -14,12 +14,14 @@ const CallSession = () => {
   const { dispatch, dispatchDeleteRoom, state, dispatchStats } = useCallContext();
 
   const sendNetworkStats = async () => {
-    if(!callFrame){
-      return
-    }
+    const localParticipant = callFrame.participants().local
+    const userInfo = {userId: localParticipant.user_id, userName:localParticipant.user_name}
     let networkStats = await callFrame.getNetworkStats()
     const {videoRecvBitsPerSecond, videoRecvPacketLoss, videoSendBitsPerSecond, videoSendPacketLoss} =  networkStats?.stats?.latest
-    dispatchStats({videoRecvBitsPerSecond, videoRecvPacketLoss, videoSendBitsPerSecond, videoSendPacketLoss})
+    dispatchStats({
+      userInfo,
+      stats: { videoRecvBitsPerSecond, videoRecvPacketLoss, videoSendBitsPerSecond, videoSendPacketLoss }
+    })
   }
 
   const onLeftMeeting = () => {
@@ -30,6 +32,9 @@ const CallSession = () => {
   }
 
   useEffect(() => {
+    if(!callFrame){
+      return
+    }
     const interval = setInterval(() => {
       sendNetworkStats();
     }, 15000);
