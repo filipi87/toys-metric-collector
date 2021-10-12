@@ -18,29 +18,29 @@ const callReducer = (state, action) => {
   }
 }
 
-const createAsyncFunctions = (dispatch) => {
-  const dispatchCreateRoom = async (roomName) => {
-    console.log('Will create new room:', roomName)
-    const response = await axios.post('/calls/v1/rooms', {roomName})
+const createAsyncFunctions = (dispatch, state) => {
+  const dispatchCreateRoom = async (roomId) => {
+    console.log('Will create new room:', roomId)
+    const response = await axios.post('/calls/v1/rooms', {roomId})
     const roomInfo = response.data
     dispatch({type:'setRoomInfo', value:roomInfo})
   }
-  const dispatchDeleteRoom = async (roomName) => {
-    console.log('Room will be deleted:', roomName)
-    await axios.delete(`/calls/v1/rooms/${roomName}`)
+  const dispatchDeleteRoom = async (roomId) => {
+    console.log('Room will be deleted:', roomId)
+    await axios.delete(`/calls/v1/rooms/${roomId}`)
     dispatch({type:'setRoomInfo', value:undefined})
   }
   const dispatchStats = async (videoStats) => {
     console.log('dispatchStats:', videoStats)
-    //TODO implement the server to receive the statistics
-    //const response = await axios.post('/calls/v1/rooms', {roomName})
+    // TODO implement the server to receive the statistics
+    //const response = await axios.post('/calls/v1/rooms', {roomId})
   }
   return { dispatchCreateRoom, dispatchDeleteRoom, dispatchStats }
 }
 
 const CallProvider = ({ children }) => {
   const [state, dispatch] = React.useReducer(callReducer, initialState);
-  const asyncFunctions = createAsyncFunctions(dispatch)
+  const asyncFunctions = createAsyncFunctions(dispatch, state)
   const value = { state, dispatch, ...asyncFunctions };
   return <CallsContext.Provider value={value}>{children}</CallsContext.Provider>;
 }
