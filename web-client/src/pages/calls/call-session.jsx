@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { Redirect } from 'react-router';
+import { Redirect, useParams } from 'react-router';
 import DailyIframe from '@daily-co/daily-js';
 import { useCallContext } from '../../contexts/calls-context';
 
@@ -7,6 +7,7 @@ import { useHistory } from 'react-router-dom';
 import { HOME } from '../../router/router-constants';
 
 const CallSession = () => {
+  const { roomId } = useParams();
   const history = useHistory();
 
   const [callFrame, setCallFrame] = useState(null);
@@ -26,10 +27,15 @@ const CallSession = () => {
 
   const onLeftMeeting = () => {
     dispatch({type:'setRoomInfo', value:undefined})
-    dispatchDeleteRoom(state.roomInfo.name)
+    dispatchDeleteRoom(state.roomInfo.roomId)
     callFrame?.destroy()
     history.push(HOME);
   }
+
+  //used for loading data when accessing directly by the link
+  useEffect(() => {
+    console.log('roomId', roomId)
+  }, [roomId]);
 
   useEffect(() => {
     if(!callFrame){

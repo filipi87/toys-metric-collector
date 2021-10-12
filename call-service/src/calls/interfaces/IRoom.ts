@@ -1,8 +1,7 @@
 import IRoomUserInfo from "./IRoomUserInfo";
 
 export default interface IRoom {
-  id: string;
-  name: string;
+  roomId: string;
   url: string;
   users: IRoomUserInfo[]
 }

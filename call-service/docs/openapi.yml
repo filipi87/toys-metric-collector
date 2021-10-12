@@ -32,12 +32,12 @@ paths:
                 $ref: "#/components/schemas/NewRoomResponse"
         500:
           description: Server internal error.
-  /calls/v1/rooms/{roomName}:
+  /calls/v1/rooms/{roomId}:
     delete:
       parameters:
-        - name: roomName
+        - name: roomId
           in: path
-          description: Room name, the same from daily
+          description: It will be used as the room name at daily
           required: true
           schema:
             type: string
@@ -70,24 +70,20 @@ components:
     NewRoom:
       type: object
       required:
-        - roomName
+        - roomId
       properties:
-        roomName:
+        roomId:
           type: string
-          description: Name of the room at Daily
+          description: Identifier of the room. It will be used as the room name at daily
     NewRoomResponse:
       type: object
       required:
-        - name
+        - roomId
         - url
-        - id
       properties:
-        id:
+        roomId:
           type: string
-          description: Identifier of the room from Daily
-        name:
-          type: string
-          description: Name of the room at Daily
+          description: Identifier of the room. It will be the name from daily.
         url:
           type: string
           description: URL to join the conference

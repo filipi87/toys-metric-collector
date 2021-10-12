@@ -12,11 +12,11 @@ class CallsDao {
     }
 
     createNewRoom(roomInfo:IRoom) {
-        if(this.roomsDatabase.has(roomInfo.id)){
+        if(this.roomsDatabase.has(roomInfo.roomId)){
             throw new Exception(403, 'There is already a room with the same id!')
         }
         roomInfo.users = []
-        this.roomsDatabase.set(roomInfo.id, roomInfo)
+        this.roomsDatabase.set(roomInfo.roomId, roomInfo)
     }
 
     private getUserFromRoom(roomInfo:IRoom, userId:string) {

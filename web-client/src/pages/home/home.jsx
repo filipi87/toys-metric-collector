@@ -17,12 +17,11 @@ const Home = () => {
 
   const classes = useStyles();
   const history = useHistory();
-  const [roomName, setRoomName] = useState('');
   const { dispatchCreateRoom, state } = useCallContext();
 
   useEffect(() => {
       if(state.roomInfo){
-        history.push(`${CALL}/${state.roomInfo.name}`);
+        history.push(`${CALL}/${state.roomInfo.roomId}`);
       }
   }, [state.roomInfo]);
 
@@ -31,7 +30,8 @@ const Home = () => {
   };
 
   const createRoom = () => {
-      dispatchCreateRoom(roomName);
+      const roomId = `r-${Date.now()}`
+      dispatchCreateRoom(roomId);
   };
 
   return (
@@ -43,17 +43,8 @@ const Home = () => {
         </Typography>
         </Grid>
         <Grid item xs={12} md={6} className={classes.aligned}>
-          <TextField
-              margin="normal"
-              required
-              fullWidth
-              autoFocus
-              placeholder='Room Name'
-              value={roomName}
-              onChange={e => setRoomName(e.target.value)}
-          />
           <Button type="button" color="primary" variant="contained" onClick={() => { createRoom() }}>
-              Join
+              Join New Room
           </Button>
         </Grid>
         <Grid item xs={12} md={6} className={classes.aligned}>

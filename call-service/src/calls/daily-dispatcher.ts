@@ -28,9 +28,9 @@ class DailyDispatcher {
     }
   }
 
-  async createNewRoom (roomName:string, endTime:number) {
+  async createNewRoom (roomId:string, endTime:number) {
     const roomInfo = {
-      name: roomName,
+      name: roomId,
       privacy: 'public', //private or public
       properties: {
         exp: endTime,
@@ -45,7 +45,7 @@ class DailyDispatcher {
     } as any
     try {
       const res = await this.axios.post(`${this.baseDailyUrl}/rooms`, roomInfo)
-      return res.data as IRoom
+      return {roomId, url:res.data.url} as IRoom
     } catch (e:any){
       console.error(e.response?.data)
       throw new Exception(e.response?.status, e.response?.data.info)

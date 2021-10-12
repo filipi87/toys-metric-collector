@@ -14,19 +14,19 @@ class CallsManager {
     this.callsDao = new CallsDao()
   }
 
-  async createRoom({roomName}:INewRoom){
-    console.log('Creating conference room', roomName)
+  async createRoom({roomId}:INewRoom){
+    console.log('Creating conference room', roomId)
     const endDate = Date.now() + (2*24*60*1000) //02 hours from now
     const dailyExpTime = Math.floor(endDate/1000)
-    const roomInfo = await this.dailyDispatcher.createNewRoom(roomName, dailyExpTime)
+    const roomInfo = await this.dailyDispatcher.createNewRoom(roomId, dailyExpTime)
     this.callsDao.createNewRoom(roomInfo)
     console.log('new room', roomInfo)
     return roomInfo
   }
 
-  async removeDailyRoom(roomName:string){
-    console.log('Removing conference room', roomName)
-    await this.dailyDispatcher.deleteRoom(roomName)
+  async removeDailyRoom(roomId:string){
+    console.log('Removing conference room', roomId)
+    await this.dailyDispatcher.deleteRoom(roomId)
   }
 
   async saveStatistics(roomId:string, newStats:INewStats){
