@@ -58,6 +58,20 @@ describe('Public Routes', () => {
     const res = await request(app).delete(`${BASE_URL}/rooms/${body.roomName}`).send(body)
     expect(res.statusCode).toBe(200)
   })
+
+  it('Send statistics', async () => {
+    const body = {
+        roomId:'testRoomId', 
+        roomName:'testRoom',
+        videoRecvBitsPerSecond: 0,
+        videoRecvPacketLoss: 0,
+        videoSendBitsPerSecond: 0,
+        videoSendPacketLoss: 0
+    }
+    const res = await request(app).post(`${BASE_URL}/rooms/${body.roomName}/stats`).send(body)
+    expect(res.statusCode).toBe(200)
+  })
+
 })
 
 

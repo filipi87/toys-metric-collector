@@ -28,6 +28,16 @@ const getCallsPublicRoutes = (config:IDailyConfig) => {
     }
   })
 
+  router.post('/rooms/:roomName/stats', async (req, res) => {
+    try {
+      //const roomInfo = await callsManager.createRoom(req.body)
+      res.sendStatus(200)
+    } catch (exception:any) {
+      console.error(exception)
+      res.status(exception.statusCode || 500).send(exception.message)
+    }
+  })
+
   return router
 }
 

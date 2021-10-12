@@ -1,13 +1,16 @@
 import IDailyConfig from './interfaces/IDailyConfig'
 import DailyDispatcher from './daily-dispatcher'
 import INewRoom from './interfaces/INewRoom'
+import CallsDao from './calls-dao'
 
 class CallsManager {
 
   private dailyDispatcher
+  private callsDao
 
   constructor(config:IDailyConfig) {
     this.dailyDispatcher = new DailyDispatcher(config)
+    this.callsDao = new CallsDao()
   }
 
   async createRoom({roomName}:INewRoom){

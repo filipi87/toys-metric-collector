@@ -1,5 +1,6 @@
 import { Exception } from '../utils/exception'
 import axios from 'axios'
+import IRoom from './interfaces/IRoom'
 
 class DailyDispatcher {
 
@@ -41,10 +42,10 @@ class DailyDispatcher {
         start_video_off: true,
         start_audio_off: false
       }
-    }
+    } as any
     try {
       const res = await this.axios.post(`${this.baseDailyUrl}/rooms`, roomInfo)
-      return res.data
+      return res.data as IRoom
     } catch (e:any){
       console.error(e.response?.data)
       throw new Exception(e.response?.status, e.response?.data.info)
