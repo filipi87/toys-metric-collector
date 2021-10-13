@@ -24,10 +24,10 @@ const DashboardStats = () => {
     return null
   }
 
-  const items = state.roomInfo.users.map(user => {
+  const bitsSendReceivedGraph = state.roomInfo.users.map(user => {
     const videoStatistics = user.videoStatistics
     const options= {
-      title: "Bits per second",
+      title: `Bits per second - ${user.name}`,
       vAxis: { title: 'Amount' },
     }
     const data = [ ['x','Received', 'Send'] ]
@@ -46,11 +46,34 @@ const DashboardStats = () => {
     )
   });
 
+  const packetLossGraph = state.roomInfo.users.map(user => {
+    const videoStatistics = user.videoStatistics
+    const options= {
+      title: `Packet loss - ${user.name}`,
+      vAxis: { title: 'Amount' },
+    }
+    const data = [ ['x','Received', 'Send'] ]
+    for ( let i = 0; i < videoStatistics.videoRecvPacketLoss.length; i++ ) {
+      const line = [i, videoStatistics.videoRecvPacketLoss[i], videoStatistics.videoSendPacketLoss[i]]
+      data.push(line);
+    }
+    return (
+       <Chart
+         key={user.id}
+         chartType="LineChart"
+         data={data}
+         options={options}
+         height="400px"
+       />
+    )
+  });
+
   return (
     <Dialog fullWidth={true} maxWidth='lg' open={state.metricViewerOpened} onClose={onClose}>
       <DialogTitle>Metrics viewer</DialogTitle>
       <DialogContent>
-          {items}
+          {bitsSendReceivedGraph}
+          {packetLossGraph}
       </DialogContent>
       <DialogActions>
           <Button onClick={onClose} color="default">
