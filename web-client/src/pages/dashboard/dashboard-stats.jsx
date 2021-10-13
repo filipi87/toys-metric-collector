@@ -68,12 +68,15 @@ const DashboardStats = () => {
     )
   });
 
+  const noDataElement = (bitsSendReceivedGraph.length === 0 && packetLossGraph.length === 0) ? 'No data available' : ''
+
   return (
     <Dialog fullWidth={true} maxWidth='lg' open={state.metricViewerOpened} onClose={onClose}>
       <DialogTitle>Metrics viewer</DialogTitle>
       <DialogContent>
           {bitsSendReceivedGraph}
           {packetLossGraph}
+          {noDataElement}
       </DialogContent>
       <DialogActions>
           <Button onClick={onClose} color="default">
