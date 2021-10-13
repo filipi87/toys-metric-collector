@@ -51,6 +51,7 @@ docker-compose logs -f
   - Create automated tests;
   - Add a log library
   - Improve the exception treatment
+  - Improve how we are creating and showing the graphs
 - call-service
   - Add a log library
   - Create more test scenarios
