@@ -1,28 +1,55 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Typography, Container, Grid, Paper } from '@material-ui/core'
+import { DataGrid } from '@material-ui/data-grid';
+import { makeStyles } from '@material-ui/core/styles';
+
+import { useCallContext } from '../../contexts/calls-context';
+
+const useStyles = makeStyles(theme => ({
+    root: {
+        display: 'flex',
+        height: '100vh',
+        width: '100vw'
+    }
+}));
 
 const Dashboard = () => {
+  const classes = useStyles();
+  const { state, dispatchGetRooms, dispatchGetRoom } = useCallContext();
+
+  useEffect(() => {
+    dispatchGetRooms()
+  }, []);
+
+  const columns = [
+      {
+          field: 'roomId',
+          headerName: 'Room Id',
+          sortable: false,
+          filterable: false,
+          flex: 1,
+      },
+      {
+          field: 'url',
+          headerName: 'Room URL',
+          sortable: false,
+          filterable: false,
+          width: 200,
+      },
+  ];
+
   return (
-    <Container maxWidth="xs">
-      <Grid container spacing={3}>
-        <Grid item xs={12} md={12}>
-          <Typography variant="h5" color="textSecondary">
-            Dashboard
-          </Typography>
-        </Grid>
-        <Grid item xs={12} md={6}>
-          <Paper
-            sx={{
-              p: 2,
-              display: 'flex',
-              flexDirection: 'column',
-              height: 240,
-            }}
-          >
-            TODO, add here the list from all the past conferences.
-          </Paper>
-        </Grid>
-      </Grid>
+    <Container className={classes.root}>
+      <DataGrid
+          rows={state?.rooms}
+          columns={columns}
+          getRowId={(row) => row.roomId}
+          pageSize={10}
+          rowsPerPageOptions={[10]}
+          autoPageSize
+          disableSelectionOnClick
+          disableColumnFilter
+      />
     </Container>
   );
 };
