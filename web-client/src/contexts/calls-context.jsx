@@ -5,16 +5,24 @@ const CallsContext = React.createContext();
 
 const initialState = {
   roomInfo: undefined,
-  rooms: []
+  rooms: [],
+  metricViewerOpened: false,
+  metricViewerRoomId: undefined
 };
 
 const callReducer = (state, action) => {
   switch (action.type) {
     case 'setRoomInfo': {
-      return { roomInfo: action.value };
+      return { ...state, roomInfo: action.value };
     }
     case 'setRooms': {
-      return { rooms: action.value };
+      return { ...state, rooms: action.value };
+    }
+    case 'openMetricViewer': {
+      return { ...state, metricViewerRoomId: action.value, metricViewerOpened:true };
+    }
+    case 'closeMetricViewer': {
+      return { ...state, metricViewerRoomId: undefined, metricViewerOpened:false, roomInfo:undefined };
     }
     default: {
       throw new Error(`Unhandled action type: ${action.type}`);

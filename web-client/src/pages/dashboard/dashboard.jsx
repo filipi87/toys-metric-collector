@@ -1,11 +1,12 @@
 import React, { useEffect } from 'react';
-import { Typography, Container, Button } from '@material-ui/core'
+import { Container, Button, IconButton } from '@material-ui/core'
 import { DataGrid } from '@material-ui/data-grid';
 import { makeStyles } from '@material-ui/core/styles';
 
 import { HOME } from '../../router/router-constants';
 import { useHistory } from 'react-router-dom';
 import { useCallContext } from '../../contexts/calls-context';
+import DashboardStats from './dashboard-stats'
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -24,7 +25,7 @@ const useStyles = makeStyles(theme => ({
 const Dashboard = () => {
   const classes = useStyles();
   const history = useHistory();
-  const { state, dispatchGetRooms, dispatchGetRoom } = useCallContext();
+  const { state, dispatch, dispatchGetRooms } = useCallContext();
 
   useEffect(() => {
     dispatchGetRooms()
@@ -34,10 +35,15 @@ const Dashboard = () => {
       history.push(HOME);
   };
 
+  const handleShowMetrics = (rowInfo) => {
+    dispatch({type:'openMetricViewer', value:rowInfo.roomId})
+  };
+
   const columns = [
       {
           field: 'roomId',
           headerName: 'Room Id',
+          editable: false,
           sortable: false,
           filterable: false,
           width: 200,
@@ -45,9 +51,33 @@ const Dashboard = () => {
       {
           field: 'url',
           headerName: 'Room URL',
+          editable: false,
           sortable: false,
           filterable: false,
           flex: 1,
+      },
+      {
+          field: 'stats',
+          headerName: 'Actions',
+          editable: false,
+          sortable: false,
+          filterable: false,
+          align: 'center',
+          resizable: false,
+          renderCell(params) {
+              const id = params.id;
+              return (
+                  <div>
+                      <IconButton
+                          color="inherit"
+                          size="small"
+                          onClick={() => handleShowMetrics(params.row)}
+                      >
+                          Metrics
+                      </IconButton>
+                  </div>
+              );
+          },
       },
   ];
 
@@ -61,7 +91,7 @@ const Dashboard = () => {
       </Button>
       <Container className={classes.root}>
         <DataGrid
-            rows={state?.rooms}
+            rows={state.rooms}
             columns={columns}
             getRowId={(row) => row.roomId}
             pageSize={10}
@@ -71,6 +101,7 @@ const Dashboard = () => {
             disableColumnFilter
         />
       </Container>
+      <DashboardStats/>
     </>
   );
 };

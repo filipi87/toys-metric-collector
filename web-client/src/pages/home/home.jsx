@@ -17,7 +17,7 @@ const Home = () => {
 
   const classes = useStyles();
   const history = useHistory();
-  const { dispatchCreateRoom, state } = useCallContext();
+  const { dispatchCreateRoom, state, dispatchGetRooms } = useCallContext();
 
   useEffect(() => {
       if(state.roomInfo){
@@ -26,6 +26,7 @@ const Home = () => {
   }, [state.roomInfo]);
 
   const goToDashboardPage = () => {
+      dispatchGetRooms()
       history.push(DASHBOARD);
   };
 
