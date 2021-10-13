@@ -1,11 +1,27 @@
 # Daily sample metric collector - coll-service
 
-Sample project based on daily to create a conference room, and monitor the statistics about all the conferences that have been made.
+Server side module responsible for provide an REST API, interacting with daily, and save all the information from the meetings. 
 
-//TODO improve
-
-## Dependencies
+## Dev Dependencies
 You will need these technologies in order to run the application
 1. [Node.js](https://nodejs.org/en/download/)
 2. [npm](http://npmjs.com)
-3. [TypeScript](https://www.typescriptlang.org)
+3. [yarn](https://www.npmjs.com/package/yarn)   
+4. [TypeScript](https://www.typescriptlang.org)
+
+## Available Scripts
+
+In the project directory, you can run:
+
+### `yarn dev`
+
+Runs the app in the development mode.\
+Open [http://localhost:8543/docs/](http://localhost:8543/docs/) to view the swagger documentation.
+
+### `yarn test`
+
+Launches the tests.
+
+### `yarn start`
+
+Launch the project in the production mode. In this case, the swagger documentation is not provided.
