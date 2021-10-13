@@ -1,0 +1,17 @@
+version: '3'
+services:
+
+    toys_metric_collector:
+        image: filipi87/toys-metric-collector:latest
+        restart: unless-stopped
+        volumes:
+            - /etc/localtime:/etc/localtime:ro
+        logging:
+          driver: "json-file"
+          options:
+            max-file: "5"
+            max-size: "10m"
+        environment:
+          - DAILY_API_KEY=d49d3b36fadc86904b45dd9340bc024cd1845c5c9eac92d77c2c43e022ebf673
+        ports:
+          - "8543:8543"
