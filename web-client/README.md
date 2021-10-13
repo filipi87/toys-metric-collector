@@ -1,6 +1,6 @@
 # Daily sample metric collector - web-client
 
-web module responsible for interacting with the coach-service and provide a web graphical interface.
+Web module responsible for interacting with the call-service and provide a web graphical interface.
 
 ## Dev Dependencies
 You will need these technologies in order to run the application
