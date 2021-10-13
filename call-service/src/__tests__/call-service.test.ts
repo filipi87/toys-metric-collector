@@ -4,6 +4,7 @@ import { config } from '../../config/config'
 
 import axios from 'axios'
 import MockAdapter from 'axios-mock-adapter'
+import CallsDao from '../calls/calls-dao'
 
 const defaultDailyRoomProperties = {
   privacy: 'public',
@@ -31,6 +32,7 @@ describe('Public Routes', () => {
 
   afterEach(() => {
     mock.reset()
+    CallsDao.clearDatabase()
   })
 
   it('Healthy', async () => {
@@ -39,7 +41,7 @@ describe('Public Routes', () => {
   })
 
   it('New Room', async () => {
-    const body = {roomId:'testRoom'}
+    const body = {roomId:`r-${Date.now()}`}
     mock.onPost(`${DAILY_BASE_URL}/rooms`).reply(200, {
       url: `http://test.daily.com`
     })
@@ -51,7 +53,7 @@ describe('Public Routes', () => {
   })
 
   it('Delete Room', async () => {
-    const body = {roomId:'testRoom'}
+    const body = {roomId:`r-${Date.now()}`}
     mock.onDelete(`${DAILY_BASE_URL}/rooms/${body.roomId}`).reply(200)
     const res = await request(app).delete(`${BASE_URL}/rooms/${body.roomId}`).send(body)
     expect(res.statusCode).toBe(200)
@@ -59,14 +61,12 @@ describe('Public Routes', () => {
 
   it('Send statistics', async () => {
     //creating new room
-    const roomInfo = {roomId:'testRoom2'}
+    const roomInfo = {roomId:`r-${Date.now()}`}
     mock.onPost(`${DAILY_BASE_URL}/rooms`).reply(200, {
       url: `http://test.daily.com`
     })
     const newRoomRes = await request(app).post(`${BASE_URL}/rooms`).send(roomInfo)
     expect(newRoomRes.statusCode).toBe(200)
-    const roomId = newRoomRes.body.roomId
-    console.log('newRoomRes', newRoomRes.body)
     //sending statistics
     const body = {
       userInfo: {
@@ -80,8 +80,22 @@ describe('Public Routes', () => {
         videoSendPacketLoss: 0
       }
     }
-    const res = await request(app).post(`${BASE_URL}/rooms/${roomId}/stats`).send(body)
+    const res = await request(app).post(`${BASE_URL}/rooms/${roomInfo.roomId}/stats`).send(body)
     expect(res.statusCode).toBe(200)
+  })
+
+  it('Get all rooms', async () => {
+    //creating new room
+    const roomInfo = {roomId:`r-${Date.now()}`}
+    mock.onPost(`${DAILY_BASE_URL}/rooms`).reply(200, {
+      url: `http://test.daily.com`
+    })
+    const newRoomRes = await request(app).post(`${BASE_URL}/rooms`).send(roomInfo)
+    expect(newRoomRes.statusCode).toBe(200)
+    //getting all rooms
+    const res = await request(app).get(`${BASE_URL}/rooms`)
+    expect(res.statusCode).toBe(200)
+    expect(res.body.length).toBe(1)
   })
 
 })

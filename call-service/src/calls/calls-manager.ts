@@ -19,7 +19,7 @@ class CallsManager {
     const endDate = Date.now() + (2*24*60*1000) //02 hours from now
     const dailyExpTime = Math.floor(endDate/1000)
     const roomInfo = await this.dailyDispatcher.createNewRoom(roomId, dailyExpTime)
-    this.callsDao.createNewRoom(roomInfo)
+    await this.callsDao.createNewRoom(roomInfo)
     console.log('new room', roomInfo)
     return roomInfo
   }
@@ -37,6 +37,11 @@ class CallsManager {
   async saveStatistics(roomId:string, newStats:INewStats){
     console.log('Saving statistics', roomId, newStats)
     this.callsDao.addStats(roomId, newStats)
+  }
+
+  async getRooms(){
+    console.log('Getting rooms')
+    return this.callsDao.getRooms()
   }
 
 }

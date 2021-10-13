@@ -5,18 +5,14 @@ import IRoom from "./interfaces/IRoom"
 class CallsDao {
 
     //TODO in the future we can replace to persist the data at Mongo or any other database
-    private roomsDatabase
+    private static roomsDatabase = new Map()
   
-    constructor() {
-      this.roomsDatabase = new Map()
-    }
-
     createNewRoom(roomInfo:IRoom) {
-        if(this.roomsDatabase.has(roomInfo.roomId)){
+        if(CallsDao.roomsDatabase.has(roomInfo.roomId)){
             throw new Exception(403, 'There is already a room with the same id!')
         }
         roomInfo.users = []
-        this.roomsDatabase.set(roomInfo.roomId, roomInfo)
+        CallsDao.roomsDatabase.set(roomInfo.roomId, roomInfo)
     }
 
     private getUserFromRoom(roomInfo:IRoom, userId:string) {
@@ -25,10 +21,10 @@ class CallsDao {
     }
 
     addStats(roomId:string, newStats:INewStats) {
-        if(!this.roomsDatabase.has(roomId)){
+        if(!CallsDao.roomsDatabase.has(roomId)){
             throw new Exception(404, 'There is no room with the specified id!')
         }
-        const roomInfo = this.roomsDatabase.get(roomId) as IRoom
+        const roomInfo = CallsDao.roomsDatabase.get(roomId) as IRoom
         let user = this.getUserFromRoom(roomInfo, newStats.userInfo.id)
         if(!user){
             user = { ...newStats.userInfo, videoStatistics:[] }
@@ -38,10 +34,19 @@ class CallsDao {
     }
 
     getRoom(roomId:string){
-        if(!this.roomsDatabase.has(roomId)){
+        if(!CallsDao.roomsDatabase.has(roomId)){
             throw new Exception(404, 'There is no room with the specified id!')
         }
-        return this.roomsDatabase.get(roomId) as IRoom
+        return CallsDao.roomsDatabase.get(roomId) as IRoom
+    }
+
+    getRooms() {
+        const rooms = Array.from(CallsDao.roomsDatabase, ([key, value]) => ({ roomId: value.roomId, url:value.url }))
+        return rooms
+    }
+
+    static clearDatabase() {
+        this.roomsDatabase.clear()
     }
  
 }
