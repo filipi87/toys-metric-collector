@@ -55,6 +55,7 @@ docker-compose logs -f
   - Add a log library
   - Create more test scenarios
   - Improve the swagger documentation to map all the other possible errors code
+  - Save the date and time at the statistics to create better analysis
   
 ### For development
 For development, you are able to run the ```web-client``` that is the web interface or the ```call-service```, that is the server side.
