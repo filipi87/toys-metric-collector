@@ -44,7 +44,7 @@ const Home = () => {
         </Grid>
         <Grid item xs={12} md={6} className={classes.aligned}>
           <Button type="button" color="primary" variant="contained" onClick={() => { createRoom() }}>
-              Join New Room
+              New meeting
           </Button>
         </Grid>
         <Grid item xs={12} md={6} className={classes.aligned}>
