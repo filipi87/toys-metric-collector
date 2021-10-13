@@ -35,8 +35,8 @@ const createAsyncFunctions = (dispatch, state) => {
     const roomInfo = response.data
     dispatch({type:'setRoomInfo', value:roomInfo})
   }
-  const dispatchGetRooms = async (roomId) => {
-    console.log('Get rooms:', roomId)
+  const dispatchGetRooms = async () => {
+    console.log('Get rooms')
     const response = await axios.get(`/calls/v1/rooms`)
     const rooms = response.data
     dispatch({type:'setRooms', value:rooms})
