@@ -11,7 +11,7 @@ services:
           options:
             max-file: "5"
             max-size: "10m"
-        environment:
-          - DAILY_API_KEY=d49d3b36fadc86904b45dd9340bc024cd1845c5c9eac92d77c2c43e022ebf673
+        #environment:
+          #- DAILY_API_KEY=YOUR_DAILY_API_KEY
         ports:
           - "8543:8543"
