@@ -7,7 +7,6 @@ import { useCallContext } from '../../contexts/calls-context';
 const DashboardStats = () => {
 
   const { state, dispatch, dispatchGetRoom } = useCallContext();
-  console.log('state.roomInfo', state.roomInfo)
 
   useEffect(() => {
     if(!state.metricViewerRoomId){
