@@ -27,10 +27,18 @@ class CallsDao {
         const roomInfo = CallsDao.roomsDatabase.get(roomId) as IRoom
         let user = this.getUserFromRoom(roomInfo, newStats.userInfo.id)
         if(!user){
-            user = { ...newStats.userInfo, videoStatistics:[] }
+            user = { ...newStats.userInfo, videoStatistics:{
+                    videoRecvBitsPerSecond:[],
+                    videoRecvPacketLoss:[],
+                    videoSendBitsPerSecond:[],
+                    videoSendPacketLoss:[]
+                }
+            }
             roomInfo.users.push(user)
         }
-        user.videoStatistics.push(newStats.stats)
+        (Object.keys(user.videoStatistics) as Array<keyof typeof user.videoStatistics>).forEach((key) => {
+            user!.videoStatistics[key].push(newStats.stats[key])
+        })
     }
 
     getRoom(roomId:string){
