@@ -25,6 +25,10 @@ const DashboardStats = () => {
 
   const bitsSendReceivedGraph = state.roomInfo.users.map(user => {
     const videoStatistics = user.videoStatistics
+    if(videoStatistics.videoRecvBitsPerSecond.length === 0 || videoStatistics.videoSendBitsPerSecond.length === 0){
+      return
+    }
+
     const options= {
       title: `Bits per second - ${user.name}`,
       vAxis: { title: 'Amount' },
@@ -47,6 +51,10 @@ const DashboardStats = () => {
 
   const packetLossGraph = state.roomInfo.users.map(user => {
     const videoStatistics = user.videoStatistics
+    if(videoStatistics.videoRecvPacketLoss.length === 0 || videoStatistics.videoSendPacketLoss.length === 0){
+      return
+    }
+
     const options= {
       title: `Packet loss - ${user.name}`,
       vAxis: { title: 'Amount' },

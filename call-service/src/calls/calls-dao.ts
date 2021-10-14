@@ -37,7 +37,7 @@ class CallsDao {
             roomInfo.users.push(user)
         }
         (Object.keys(user.videoStatistics) as Array<keyof typeof user.videoStatistics>).forEach((key) => {
-            user!.videoStatistics[key].push(newStats.stats[key])
+            user!.videoStatistics[key].push(newStats.stats[key] || 0)
         })
     }
 
