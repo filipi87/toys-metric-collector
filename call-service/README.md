@@ -16,6 +16,9 @@ Before running, you will need to edit the file ```config/config.ts``` and config
 
 In the project directory, you can run:
 
+### `yarn install`
+Download all the dependencies that the project need for run
+
 ### `yarn dev`
 
 Runs the app in the development mode.\
