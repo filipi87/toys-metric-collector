@@ -13,6 +13,9 @@ From the home page, the user can:
     - Important: the meetins are kept in memory at the server, so if you restart the server, you will lose the history;
   - Can click in a specific meeting to see the metrics that have been collected;
 
+## Demo
+- https://toys-metric-collector.azurewebsites.net/home
+
 ## Dependencies for production
 You will need these technologies in order to run the application
 1. [docker](https://www.docker.com/)
