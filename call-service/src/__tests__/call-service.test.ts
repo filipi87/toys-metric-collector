@@ -13,7 +13,7 @@ const defaultDailyRoomProperties = {
     enable_prejoin_ui: true,
     enable_screenshare: true,
     enable_chat: true,
-    start_video_off: true,
+    start_video_off: false,
     start_audio_off: false
   }
 }
