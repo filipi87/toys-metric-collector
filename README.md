@@ -56,6 +56,7 @@ docker-compose logs -f
   - Improve the exception treatment
   - Improve how we are creating and showing the graphs
 - call-service
+  - Integrate with a real database
   - Add a log library
   - Create more test scenarios
   - Improve the swagger documentation to map all the other possible errors code

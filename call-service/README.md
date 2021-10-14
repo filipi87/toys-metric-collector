@@ -9,6 +9,9 @@ You will need these technologies in order to run the application
 3. [yarn](https://www.npmjs.com/package/yarn)   
 4. [TypeScript](https://www.typescriptlang.org)
 
+## Before execute in development
+Before running, you will need to edit the file ```config/config.ts``` and configure your daily api key.
+
 ## Available Scripts
 
 In the project directory, you can run:

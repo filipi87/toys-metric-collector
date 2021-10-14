@@ -9,6 +9,7 @@ servers:
 paths:
   /healthy:
     get:
+      summary: Health check to see if the service is running
       tags:
         - Sanity check
       responses:
@@ -17,7 +18,19 @@ paths:
         500:
           description: Server internal error.
   /calls/v1/rooms:
+    get:
+      summary: Retrieve all the meeting that have been created since the last time the service has restarted
+      responses:
+        200:
+          description: Ok.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/RoomResponseList"
+        500:
+          description: Server internal error.
     post:
+      summary: Will create a new meeting at daily and persist the information in memory
       requestBody:
         content:
           application/json:
@@ -34,6 +47,7 @@ paths:
           description: Server internal error.
   /calls/v1/rooms/{roomId}:
     get:
+      summary: Retrieve the informations about a specific meeting, including the statistics
       parameters:
         - name: roomId
           in: path
@@ -47,10 +61,11 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/RoomResponse"
+                $ref: "#/components/schemas/RoomInfo"
         500:
           description: Server internal error.
     delete:
+      summary: Delete the room from daily. Not remove the data that is persisted in memory with the statistics of the meeting.
       parameters:
         - name: roomId
           in: path
@@ -65,6 +80,7 @@ paths:
           description: Server internal error.
   /calls/v1/rooms/{roomId}/stats:
     post:
+      summary: Add a statistic from a specific user to the meeting
       parameters:
         - name: roomId
           in: path
@@ -104,6 +120,63 @@ components:
         url:
           type: string
           description: URL to join the conference
+    RoomInfo:
+      type: object
+      required:
+        - roomId
+        - url
+        - users
+      properties:
+        roomId:
+          type: string
+          description: Identifier of the room. It will be the name from daily.
+        url:
+          type: string
+          description: URL to join the conference
+        users:
+          type: object
+          description: Users that have joined the conference
+          properties:
+            id:
+              type: string
+              description: User identifier
+            name:
+              type: string
+              description: Name of the user
+            videoStatistics:
+              type: object
+              description: statistics collected from the user during the meeting
+              required:
+                - videoRecvBitsPerSecond
+                - videoRecvPacketLoss
+                - videoSendBitsPerSecond
+                - videoSendPacketLoss
+              properties:
+                videoRecvBitsPerSecond:
+                  type: array
+                  items:
+                    type: number
+                  description: Number of bits received per second, retrieved from daily
+                videoRecvPacketLoss:
+                  type: array
+                  items:
+                    type: number
+                  description: The worst received packet loss number seen for a two-second period, retrieved from daily
+                videoSendBitsPerSecond:
+                  type: array
+                  items:
+                    type: number
+                  description: Number of bits send per second, retrieved from daily
+                videoSendPacketLoss:
+                  type: array
+                  items:
+                    type: number
+                  description: the worst send packet loss number seen for a two-second period, retrieved from daily
+
+    RoomResponseList:
+      type: array
+      items:
+        $ref: '#/components/schemas/RoomResponse'
     NewStats:
       type: object
       required:
@@ -142,6 +215,3 @@ components:
             videoSendPacketLoss:
               type: number
               description: the worst send packet loss number seen for a two-second period, retrieved from daily
-
-
-
