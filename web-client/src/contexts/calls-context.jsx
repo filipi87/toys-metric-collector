@@ -7,7 +7,8 @@ const initialState = {
   roomInfo: undefined,
   rooms: [],
   metricViewerOpened: false,
-  metricViewerRoomId: undefined
+  metricViewerRoomId: undefined,
+  creatingMeeting: false,
 };
 
 const callReducer = (state, action) => {
@@ -17,6 +18,9 @@ const callReducer = (state, action) => {
     }
     case 'setRooms': {
       return { ...state, rooms: action.value };
+    }
+    case 'setCreatingMeeting': {
+      return { ...state, creatingMeeting: action.value };
     }
     case 'openMetricViewer': {
       return { ...state, metricViewerRoomId: action.value, metricViewerOpened:true };
@@ -33,9 +37,16 @@ const callReducer = (state, action) => {
 const createAsyncFunctions = (dispatch, state) => {
   const dispatchCreateRoom = async (roomId) => {
     console.log('Create new room:', roomId)
-    const response = await axios.post('/calls/v1/rooms', {roomId})
-    const roomInfo = response.data
-    dispatch({type:'setRoomInfo', value:roomInfo})
+    dispatch({type:'setCreatingMeeting', value:true})
+    try {
+      const response = await axios.post('/calls/v1/rooms', {roomId})
+      const roomInfo = response.data
+      dispatch({type:'setRoomInfo', value:roomInfo})
+    }catch(e){
+      //TODO improve in the future to deal with the exceptions and show and correct error to the user
+      console.error(e)
+    }
+    dispatch({type:'setCreatingMeeting', value:false})
   }
   const dispatchGetRoom = async (roomId) => {
     console.log('Get room:', roomId)

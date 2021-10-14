@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Typography, Container, Grid, Button } from '@material-ui/core'
+import { Typography, Container, Grid, Button, Backdrop, CircularProgress } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles';
 
 import { DASHBOARD, CALL } from '../../router/router-constants';
@@ -44,7 +44,7 @@ const Home = () => {
         </Typography>
         </Grid>
         <Grid item xs={12} md={6} className={classes.aligned}>
-          <Button type="button" color="primary" variant="contained" onClick={() => { createRoom() }}>
+          <Button type="button" disabled={state.creatingMeeting} color="primary" variant="contained" onClick={() => { createRoom() }}>
               New meeting
           </Button>
         </Grid>
@@ -54,6 +54,13 @@ const Home = () => {
           </Button>
         </Grid>
       </Grid>
+      <Backdrop
+        sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+        open={state.creatingMeeting}
+      >
+        <CircularProgress color="inherit" />
+        Creating meeting
+      </Backdrop>
     </Container>
   );
 };
